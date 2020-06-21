@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef } fr
 import { LocationService } from 'src/app/services/location.service';
 import { Observable } from 'rxjs/internal/Observable';
 import * as geolib from 'geolib';
-import { London } from '../lib/constants';
+import { London, user } from '../lib/constants';
 
 @Component({
   selector: 'app-location',
@@ -13,7 +13,7 @@ export class LocationComponent implements OnInit {
 
   locationData: [];
   locationCityData: [];
-  filteredData: any;
+  filteredData: any
 
   constructor(
     public restApi: LocationService,
@@ -25,7 +25,7 @@ export class LocationComponent implements OnInit {
     this.getUserByDistance()
   }
  
-  loadUserBYCity() {
+loadUserBYCity() {
     this.restApi.getUserByCity('London').subscribe((data) => {
       this.locationCityData = data;
       this.cd.markForCheck();
@@ -38,18 +38,17 @@ export class LocationComponent implements OnInit {
   return test
 }
 
-getUserByDistance(){
+getUserByDistance() {
   this.filteredData = this.getUsersWithinDistance(London, 60);
   this.cd.markForCheck();
 }
 
-getUsersWithinDistance = async (city, distance) => {
+getUsersWithinDistance =  (city, distance) => {
   this.restApi.getUsers().subscribe((data) => {
   this.locationData = data;
   this.filteredData =  this.locationData.filter(({latitude, longitude}) => {
     return this.getDistance(city, {latitude, longitude}) <= distance;
    }).concat(this.locationCityData);
-   console.log(this.filteredData)
   });
 }
 }

@@ -3,7 +3,7 @@ import { from, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap, retry } from 'rxjs/operators';
-import getDistance from 'geolib/es/getDistance';
+import { user } from '../lib/constants'
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,25 +20,30 @@ const httpOptions = {
 })
 
 export class LocationService {
-  endpointURL: string = 'https://bpdts-test-app-v3.herokuapp.com/users';
-
   constructor(private httpClient: HttpClient) { }
   
   getUsers(): Observable<any> {
-    return this.httpClient.get<any>(this.endpointURL, httpOptions)
+    return this.httpClient.get<user>('posts/', httpOptions)
       .pipe(
+        map(responce => {
+          return responce
+        }),
         retry(1),
         catchError(this.handleError)
-      )
+    )
   }
 
   getUserByCity(city): Observable<any> {
-    return this.httpClient.get<any>(`https://bpdts-test-app-v3.herokuapp.com/city/${city}/users`, httpOptions)
+    return this.httpClient.get<user>(`posts/city`, httpOptions)
       .pipe(
+        map(responce => {
+          return responce
+        }),
         retry(1),
         catchError(this.handleError)
-      )
+    )
   }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
