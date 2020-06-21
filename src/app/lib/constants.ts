@@ -1,9 +1,6 @@
 export const London = { latitude: 51.509865, longitude: -0.118092 };
 
 export class user {
-  filter(arg0: ({ latitude, longitude }: { latitude: any; longitude: any; }) => boolean) {
-    throw new Error("Method not implemented.");
-  }
   id: number;
   first_name: string;
   last_name: string;
