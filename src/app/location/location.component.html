@@ -1,0 +1,9 @@
+<div class="container">
+  <ul *ngIf="filteredData.length > 0" class="list-container">
+    <li *ngFor="let user of filteredData">
+      <div><b>Full Name: </b>{{user.first_name}} {{user.last_name}}</div>
+      <div><b>E-mail: </b>{{user.email}}</div>
+      <div><b>IP Address: </b>{{user.ip_address}}</div>
+      </li>
+  </ul>
+</div>
